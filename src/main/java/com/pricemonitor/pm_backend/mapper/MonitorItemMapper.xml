@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pricemonitor.pm_backend.mapper.MonitorItemMapper" >
+  <resultMap id="BaseResultMap" type="com.pricemonitor.pm_backend.bean.pojo.MonitorItem" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="item_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="category_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="subtitle" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="plus_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="max_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="min_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="discount" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="last_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="note" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sale" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="label" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="store_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_ziying" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="is_alert" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, user_price, item_id, category_id, name, subtitle, price, plus_price, 
+    max_price, min_price, discount, last_price, note, sale, label, store_name, is_ziying, 
+    is_alert, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pricemonitor.pm_backend.bean.pojo.MonitorItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_monitor_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null and pageSize != null and pageSize != 0">
+      limit #{startRow},#{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_monitor_item
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_monitor_item
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pricemonitor.pm_backend.bean.pojo.MonitorItemExample" >
+    delete from pm_monitor_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pricemonitor.pm_backend.bean.pojo.MonitorItem" >
+    insert into pm_monitor_item (id, user_id, user_price, 
+      item_id, category_id, name, 
+      subtitle, price, plus_price, 
+      max_price, min_price, discount, 
+      last_price, note, sale, 
+      label, store_name, is_ziying, 
+      is_alert, gmt_create, gmt_modified
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userPrice,jdbcType=VARCHAR}, 
+      #{itemId,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{subtitle,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, #{plusPrice,jdbcType=VARCHAR}, 
+      #{maxPrice,jdbcType=VARCHAR}, #{minPrice,jdbcType=VARCHAR}, #{discount,jdbcType=VARCHAR}, 
+      #{lastPrice,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, #{sale,jdbcType=VARCHAR}, 
+      #{label,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, #{isZiying,jdbcType=BIT}, 
+      #{isAlert,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pricemonitor.pm_backend.bean.pojo.MonitorItem" >
+    insert into pm_monitor_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userPrice != null" >
+        user_price,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="subtitle != null" >
+        subtitle,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="plusPrice != null" >
+        plus_price,
+      </if>
+      <if test="maxPrice != null" >
+        max_price,
+      </if>
+      <if test="minPrice != null" >
+        min_price,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="lastPrice != null" >
+        last_price,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="sale != null" >
+        sale,
+      </if>
+      <if test="label != null" >
+        label,
+      </if>
+      <if test="storeName != null" >
+        store_name,
+      </if>
+      <if test="isZiying != null" >
+        is_ziying,
+      </if>
+      <if test="isAlert != null" >
+        is_alert,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userPrice != null" >
+        #{userPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="plusPrice != null" >
+        #{plusPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="maxPrice != null" >
+        #{maxPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="minPrice != null" >
+        #{minPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=VARCHAR},
+      </if>
+      <if test="lastPrice != null" >
+        #{lastPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="sale != null" >
+        #{sale,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null" >
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isZiying != null" >
+        #{isZiying,jdbcType=BIT},
+      </if>
+      <if test="isAlert != null" >
+        #{isAlert,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pricemonitor.pm_backend.bean.pojo.MonitorItemExample" resultType="java.lang.Integer" >
+    select count(*) from pm_monitor_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_monitor_item
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userPrice != null" >
+        user_price = #{record.userPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemId != null" >
+        item_id = #{record.itemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryId != null" >
+        category_id = #{record.categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subtitle != null" >
+        subtitle = #{record.subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plusPrice != null" >
+        plus_price = #{record.plusPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxPrice != null" >
+        max_price = #{record.maxPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minPrice != null" >
+        min_price = #{record.minPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discount != null" >
+        discount = #{record.discount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastPrice != null" >
+        last_price = #{record.lastPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sale != null" >
+        sale = #{record.sale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.label != null" >
+        label = #{record.label,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeName != null" >
+        store_name = #{record.storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isZiying != null" >
+        is_ziying = #{record.isZiying,jdbcType=BIT},
+      </if>
+      <if test="record.isAlert != null" >
+        is_alert = #{record.isAlert,jdbcType=BIT},
+      </if>
+      <if test="record.gmtCreate != null" >
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null" >
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_monitor_item
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      user_price = #{record.userPrice,jdbcType=VARCHAR},
+      item_id = #{record.itemId,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      subtitle = #{record.subtitle,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      plus_price = #{record.plusPrice,jdbcType=VARCHAR},
+      max_price = #{record.maxPrice,jdbcType=VARCHAR},
+      min_price = #{record.minPrice,jdbcType=VARCHAR},
+      discount = #{record.discount,jdbcType=VARCHAR},
+      last_price = #{record.lastPrice,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR},
+      sale = #{record.sale,jdbcType=VARCHAR},
+      label = #{record.label,jdbcType=VARCHAR},
+      store_name = #{record.storeName,jdbcType=VARCHAR},
+      is_ziying = #{record.isZiying,jdbcType=BIT},
+      is_alert = #{record.isAlert,jdbcType=BIT},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pricemonitor.pm_backend.bean.pojo.MonitorItem" >
+    update pm_monitor_item
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userPrice != null" >
+        user_price = #{userPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        subtitle = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="plusPrice != null" >
+        plus_price = #{plusPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="maxPrice != null" >
+        max_price = #{maxPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="minPrice != null" >
+        min_price = #{minPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=VARCHAR},
+      </if>
+      <if test="lastPrice != null" >
+        last_price = #{lastPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="sale != null" >
+        sale = #{sale,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null" >
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isZiying != null" >
+        is_ziying = #{isZiying,jdbcType=BIT},
+      </if>
+      <if test="isAlert != null" >
+        is_alert = #{isAlert,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pricemonitor.pm_backend.bean.pojo.MonitorItem" >
+    update pm_monitor_item
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_price = #{userPrice,jdbcType=VARCHAR},
+      item_id = #{itemId,jdbcType=BIGINT},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      plus_price = #{plusPrice,jdbcType=VARCHAR},
+      max_price = #{maxPrice,jdbcType=VARCHAR},
+      min_price = #{minPrice,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=VARCHAR},
+      last_price = #{lastPrice,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      sale = #{sale,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      is_ziying = #{isZiying,jdbcType=BIT},
+      is_alert = #{isAlert,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
